@@ -11,8 +11,8 @@ include(FetchContent)
 FetchContent_Declare(
     mathlib
 #    GIT_REPOSITORY https://github.com/unusualbody/mathlib.git
-#    GIT_TAB        v0.1
-    URL https://github.com/unusualbody/mathlib/archive/refs/tags/v0.1.tar.gz
+#    GIT_TAB        v0.3
+    URL https://github.com/unusualbody/mathlib/archive/refs/tags/v0.3.tar.gz
 )
 
 FetchContent_MakeAvailable(mathlib)
