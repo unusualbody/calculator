@@ -11,11 +11,31 @@ include(FetchContent)
 FetchContent_Declare(
     mathlib
 #    GIT_REPOSITORY https://github.com/unusualbody/mathlib.git
-#    GIT_TAB        v0.3
+#    GIT_TAG        v0.3
     URL https://github.com/unusualbody/mathlib/archive/refs/tags/v0.3.tar.gz
 )
 
-FetchContent_MakeAvailable(mathlib)
+FetchContent_Declare(
+    nlohmann_json
+    URL https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz
+)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz
+)
+
+FetchContent_Declare(
+    spdlog
+    URL https://github.com/gabime/spdlog/archive/refs/tags/v1.17.0.tar.gz
+)
+
+FetchContent_MakeAvailable(
+    mathlib
+    nlohmann_json
+    googletest
+    spdlog
+)
 
 add_executable(calculator src/main.cpp)
 target_link_libraries(calculator PRIVATE mathlib)
