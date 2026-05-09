@@ -37,7 +37,26 @@ FetchContent_MakeAvailable(
     spdlog
 )
 
-add_executable(calculator src/main.cpp)
+add_executable(calculator
+    src/main.cpp
+
+    src/calc_data.h
+
+    src/runner.h
+    src/runner.cpp
+
+    src/parser.h
+    src/parser.cpp
+
+    src/checker.h
+    src/checker.cpp
+
+    src/calculator.h
+    src/calculator.cpp
+
+    src/printer.h
+    src/printer.cpp
+)
 target_link_libraries(calculator PRIVATE mathlib)
 
 install(TARGETS calculator DESTINATION bin)
