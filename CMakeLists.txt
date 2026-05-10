@@ -56,6 +56,11 @@ add_library(calculator_core
     src/printer.cpp
 )
 
+target_include_directories(calculator_core
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
 target_link_libraries(calculator_core
     PUBLIC
         nlohmann_json::nlohmann_json
@@ -71,6 +76,23 @@ target_link_libraries(calculator
     PRIVATE
         calculator_core
 )
+
+enable_testing()
+
+add_executable(calculator_tests
+    tests/calculator_tests.cpp
+    tests/checker_tests.cpp
+    tests/parser_tests.cpp
+)
+
+target_link_libraries(calculator_tests
+    PRIVATE
+        calculator_core
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(calculator_tests)
 
 install(TARGETS calculator DESTINATION bin)
 
@@ -95,6 +117,9 @@ if (CLANG_FORMAT_EXE)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/calculator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/calculator_tests.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/checker_tests.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/parser_tests.cpp
     )
 
     add_custom_target(
