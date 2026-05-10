@@ -1,10 +1,11 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-class Calculator
-{
-public:
+#include "expression.h"
 
+class Calculator {
+public:
+  int calculate(const Expression &expression) const;
 };
 
-#endif  // CALCULATOR_H
+#endif // CALCULATOR_H

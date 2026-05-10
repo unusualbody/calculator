@@ -40,7 +40,7 @@ FetchContent_MakeAvailable(
 add_executable(calculator
     src/main.cpp
 
-    src/calc_data.h
+    src/expression.h
 
     src/runner.h
     src/runner.cpp
@@ -57,16 +57,35 @@ add_executable(calculator
     src/printer.h
     src/printer.cpp
 )
-target_link_libraries(calculator PRIVATE mathlib)
+target_link_libraries(calculator
+    PRIVATE
+        mathlib
+        nlohmann_json::nlohmann_json            
+)
 
 install(TARGETS calculator DESTINATION bin)
 
 # clang-format
-find_program(CLANG_FORMAT_EXE clang-format)
+find_program(CLANG_FORMAT_EXE
+    NAMES
+        clang-format
+        clang-format-15
+)
 
 if (CLANG_FORMAT_EXE)
     set(CLANG_FORMAT_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/expression.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/checker.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/checker.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/calculator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/calculator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.cpp
     )
 
     add_custom_target(

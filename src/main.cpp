@@ -1,3 +1,11 @@
+#include "runner.h"
+
+int main(int argc, char **argv) {
+  Runner runner;
+  return runner.run(argc, argv);
+}
+
+#if 0
 #include "mathlib.h"
 
 #include <cerrno>
@@ -165,7 +173,7 @@ static int parse(CalcData* d, int argc, char** argv, int* want_help)
             print_error("invalid integer: %s", argv[optind]);
             return 2;
         }
-    
+
         const char* op = argv[optind + 1];
         if (!op || op[0] == '\0' || op[1] != '\0') {
             print_error("operation must be a single character");
@@ -318,3 +326,4 @@ int main(int argc, char** argv)
     return run(argc, argv);
 }
 
+#endif
