@@ -37,9 +37,7 @@ FetchContent_MakeAvailable(
     spdlog
 )
 
-add_executable(calculator
-    src/main.cpp
-
+add_library(calculator_core
     src/expression.h
 
     src/runner.h
@@ -57,10 +55,21 @@ add_executable(calculator
     src/printer.h
     src/printer.cpp
 )
-target_link_libraries(calculator
+
+target_link_libraries(calculator_core
+    PUBLIC
+        nlohmann_json::nlohmann_json
     PRIVATE
         mathlib
-        nlohmann_json::nlohmann_json            
+)
+
+add_executable(calculator
+    src/main.cpp
+)
+
+target_link_libraries(calculator
+    PRIVATE
+        calculator_core
 )
 
 install(TARGETS calculator DESTINATION bin)
