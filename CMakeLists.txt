@@ -40,6 +40,9 @@ FetchContent_MakeAvailable(
 add_library(calculator_core
     src/expression.h
 
+    src/logger.h
+    src/logger.cpp
+
     src/runner.h
     src/runner.cpp
 
@@ -66,6 +69,7 @@ target_link_libraries(calculator_core
         nlohmann_json::nlohmann_json
     PRIVATE
         mathlib
+        spdlog::spdlog
 )
 
 add_executable(calculator
@@ -107,6 +111,8 @@ if (CLANG_FORMAT_EXE)
     set(CLANG_FORMAT_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/expression.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.h
         ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.h
