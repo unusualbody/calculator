@@ -26,18 +26,18 @@ void Printer::printHelp(const char *prog) const {
 }
 
 void Printer::printResult(const Expression &expression, int result) const {
-  switch (expression.op()) {
+  switch (expression.op) {
   case '!':
-    printf("fact(%d) = %d\n", expression.a(), result);
+    printf("fact(%d) = %d\n", expression.a, result);
     break;
   case '^':
-    printf("%d^%d = %d\n", expression.a(), expression.b(), result);
+    printf("%d^%d = %d\n", expression.a, expression.b, result);
     break;
   case 'x':
-    printf("%d x %d = %d\n", expression.a(), expression.b(), result);
+    printf("%d x %d = %d\n", expression.a, expression.b, result);
     break;
   default:
-    printf("%d %c %d = %d\n", expression.a(), expression.op(), expression.b(),
+    printf("%d %c %d = %d\n", expression.a, expression.op, expression.b,
            result);
     break;
   }

@@ -27,12 +27,12 @@ Expression Parser::parse(int argc, char **argv) const {
       throw std::runtime_error("'!' must be used in unary form");
     }
 
-    return Expression{a, op};
+    return Expression{a, 0, op, false};
   }
 
   const int b = getRequiredInt(json, "b");
 
-  return Expression{a, b, op};
+  return Expression{a, b, op, true};
 }
 
 int Parser::getRequiredInt(const nlohmann::json &json, const char *name) const {

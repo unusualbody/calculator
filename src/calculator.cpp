@@ -6,24 +6,24 @@ int Calculator::calculate(const Expression &expression) const {
   int result = 0;
   int rc = mathlib::MATH_OK;
 
-  switch (expression.op()) {
+  switch (expression.op) {
   case '+':
-    rc = mathlib::math_add(expression.a(), expression.b(), &result);
+    rc = mathlib::math_add(expression.a, expression.b, &result);
     break;
   case '-':
-    rc = mathlib::math_sub(expression.a(), expression.b(), &result);
+    rc = mathlib::math_sub(expression.a, expression.b, &result);
     break;
   case 'x':
-    rc = mathlib::math_mul(expression.a(), expression.b(), &result);
+    rc = mathlib::math_mul(expression.a, expression.b, &result);
     break;
   case '/':
-    rc = mathlib::math_div(expression.a(), expression.b(), &result);
+    rc = mathlib::math_div(expression.a, expression.b, &result);
     break;
   case '^':
-    rc = mathlib::math_pow(expression.a(), expression.b(), &result);
+    rc = mathlib::math_pow(expression.a, expression.b, &result);
     break;
   case '!':
-    rc = mathlib::math_fact(expression.a(), &result);
+    rc = mathlib::math_fact(expression.a, &result);
     break;
   default:
     throw std::runtime_error("unknown operation");

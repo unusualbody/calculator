@@ -9,10 +9,10 @@ TEST(ParserTest, ParsesValidBinaryExpression) {
   char arg1[] = "{\"a\":2,\"b\":3,\"op\":\"+\"}";
   char *argv[] = {arg0, arg1};
   const Expression expression = parser.parse(2, argv);
-  EXPECT_EQ(expression.a(), 2);
-  EXPECT_EQ(expression.b(), 3);
-  EXPECT_EQ(expression.op(), '+');
-  EXPECT_TRUE(expression.hasB());
+  EXPECT_EQ(expression.a, 2);
+  EXPECT_EQ(expression.b, 3);
+  EXPECT_EQ(expression.op, '+');
+  EXPECT_TRUE(expression.has_b);
 }
 
 TEST(ParserTest, ParsesValidFactorialExpression) {
@@ -21,9 +21,9 @@ TEST(ParserTest, ParsesValidFactorialExpression) {
   char arg1[] = "{\"a\":5,\"op\":\"!\"}";
   char *argv[] = {arg0, arg1};
   const Expression expression = parser.parse(2, argv);
-  EXPECT_EQ(expression.a(), 5);
-  EXPECT_EQ(expression.op(), '!');
-  EXPECT_FALSE(expression.hasB());
+  EXPECT_EQ(expression.a, 5);
+  EXPECT_EQ(expression.op, '!');
+  EXPECT_FALSE(expression.has_b);
 }
 
 TEST(ParserTest, ThrowsOnInvalidNumberOfArguments) {

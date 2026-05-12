@@ -2,14 +2,14 @@
 #include <stdexcept>
 
 void Checker::check(const Expression &expression) const {
-  const char op = expression.op();
+  const char op = expression.op;
 
   if (op == '!') {
-    if (expression.hasB()) {
+    if (expression.has_b) {
       throw std::runtime_error("'!' must be used in unary form");
     }
 
-    if (expression.a() < 0) {
+    if (expression.a < 0) {
       throw std::runtime_error("factorial requires n >= 0");
     }
 
@@ -20,15 +20,15 @@ void Checker::check(const Expression &expression) const {
     throw std::runtime_error("unknown operation");
   }
 
-  if (!expression.hasB()) {
+  if (!expression.has_b) {
     throw std::runtime_error("binary operation requires second operand");
   }
 
-  if (op == '^' && expression.b() < 0) {
+  if (op == '^' && expression.b < 0) {
     throw std::runtime_error("power requires exp >= 0");
   }
 
-  if (op == '/' && expression.b() == 0) {
+  if (op == '/' && expression.b == 0) {
     throw std::runtime_error("division by zero");
   }
 }
