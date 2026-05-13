@@ -11,23 +11,121 @@ include(FetchContent)
 FetchContent_Declare(
     mathlib
 #    GIT_REPOSITORY https://github.com/unusualbody/mathlib.git
-#    GIT_TAB        v0.3
+#    GIT_TAG        v0.3
     URL https://github.com/unusualbody/mathlib/archive/refs/tags/v0.3.tar.gz
 )
 
-FetchContent_MakeAvailable(mathlib)
+FetchContent_Declare(
+    nlohmann_json
+    URL https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz
+)
 
-add_executable(calculator src/main.cpp)
-target_link_libraries(calculator PRIVATE mathlib)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz
+)
+
+FetchContent_Declare(
+    spdlog
+    URL https://github.com/gabime/spdlog/archive/refs/tags/v1.17.0.tar.gz
+)
+
+FetchContent_MakeAvailable(
+    mathlib
+    nlohmann_json
+    googletest
+    spdlog
+)
+
+add_library(calculator_core
+    src/expression.h
+
+    src/logger.h
+    src/logger.cpp
+
+    src/runner.h
+    src/runner.cpp
+
+    src/parser.h
+    src/parser.cpp
+
+    src/checker.h
+    src/checker.cpp
+
+    src/calculator.h
+    src/calculator.cpp
+
+    src/printer.h
+    src/printer.cpp
+)
+
+target_include_directories(calculator_core
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_link_libraries(calculator_core
+    PUBLIC
+        nlohmann_json::nlohmann_json
+    PRIVATE
+        mathlib
+        spdlog::spdlog
+)
+
+add_executable(calculator
+    src/main.cpp
+)
+
+target_link_libraries(calculator
+    PRIVATE
+        calculator_core
+)
+
+enable_testing()
+
+add_executable(calculator_tests
+    tests/calculator_tests.cpp
+    tests/checker_tests.cpp
+    tests/parser_tests.cpp
+)
+
+target_link_libraries(calculator_tests
+    PRIVATE
+        calculator_core
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(calculator_tests)
 
 install(TARGETS calculator DESTINATION bin)
 
 # clang-format
-find_program(CLANG_FORMAT_EXE clang-format)
+find_program(CLANG_FORMAT_EXE
+    NAMES
+        clang-format
+        clang-format-15
+)
 
 if (CLANG_FORMAT_EXE)
     set(CLANG_FORMAT_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/expression.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/logger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/runner.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/checker.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/checker.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/calculator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/calculator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/printer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/calculator_tests.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/checker_tests.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/parser_tests.cpp
     )
 
     add_custom_target(
